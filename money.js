@@ -10,157 +10,199 @@
  * For details, examples and documentation:
  * http://openexchangerates.github.io/money.js/
  */
-(function(root, undefined) {
+function convert(val, from) {
 
-	// Create a safe reference to the money.js object for use below.
-	var fx = function(obj) {
-		return new fxWrapper(obj);
-	};
+  var rates = {
+    AED: 3.67265,
+    AFN: 57.3701,
+    ALL: 123.1,
+    AMD: 479.217998,
+    ANG: 1.78952,
+    AOA: 105.000126,
+    ARS: 8.678108,
+    AUD: 1.287225,
+    AWG: 1.79,
+    AZN: 0.783317,
+    BAM: 1.716635,
+    BBD: 2,
+    BDT: 77.91521,
+    BGN: 1.71537,
+    BHD: 0.377017,
+    BIF: 1566.675,
+    BMD: 1,
+    BND: 1.35644,
+    BOB: 6.9049,
+    BRL: 2.83382,
+    BSD: 1,
+    BTC: 0.0043097411,
+    BTN: 62.147563,
+    BWP: 9.666088,
+    BYR: 15331.333333,
+    BZD: 1.99886,
+    CAD: 1.245236,
+    CDF: 926.65,
+    CHF: 0.932015,
+    CLF: 0.02478,
+    CLP: 618.495001,
+    CNY: 6.220052,
+    COP: 2383.2,
+    CRC: 538.843004,
+    CUP: 1.000625,
+    CVE: 96.696699,
+    CZK: 24.24025,
+    DJF: 177.611121,
+    DKK: 6.53082,
+    DOP: 44.833,
+    DZD: 94.1272,
+    EEK: 13.731525,
+    EGP: 7.617672,
+    ERN: 15.146125,
+    ETB: 20.32114,
+    EUR: 0.877424,
+    FJD: 2.049666,
+    FKP: 0.648948,
+    GBP: 0.648948,
+    GEL: 1.7655,
+    GGP: 0.648948,
+    GHS: 3.41808,
+    GIP: 0.648948,
+    GMD: 42.968,
+    GNF: 7235,
+    GTQ: 7.65724,
+    GYD: 206.732502,
+    HKD: 7.755441,
+    HNL: 21.17392,
+    HRK: 6.75999,
+    HTG: 46.59608,
+    HUF: 268.829798,
+    IDR: 12764.89987,
+    ILS: 3.882973,
+    IMP: 0.648948,
+    INR: 62.09653,
+    IQD: 1191.683333,
+    IRR: 27568,
+    ISK: 131.375999,
+    JEP: 0.648948,
+    JMD: 115.542999,
+    JOD: 0.709864,
+    JPY: 118.6557,
+    KES: 91.56116,
+    KGS: 60.669375,
+    KHR: 4056.527417,
+    KMF: 431.744465,
+    KPW: 900,
+    KRW: 1097.791649,
+    KWD: 0.295279,
+    KYD: 0.824323,
+    KZT: 185.477999,
+    LAK: 8114.483398,
+    LBP: 1507.833333,
+    LKR: 132.969999,
+    LRD: 84.815525,
+    LSL: 11.67826,
+    LTL: 2.972284,
+    LVL: 0.616801,
+    LYD: 1.35611,
+    MAD: 9.512464,
+    MDL: 18.7904,
+    MGA: 2841.316667,
+    MKD: 53.91144,
+    MMK: 1031.066667,
+    MNT: 1958.833333,
+    MOP: 7.95896,
+    MRO: 291.52875,
+    MTL: 0.683602,
+    MUR: 33.3473,
+    MVR: 15.23292,
+    MWK: 449.246999,
+    MXN: 14.89534,
+    MYR: 3.58206,
+    MZN: 33.670975,
+    NAD: 11.67822,
+    NGN: 204.274001,
+    NIO: 26.68846,
+    NOK: 7.582327,
+    NPR: 99.20836,
+    NZD: 1.337953,
+    OMR: 0.384948,
+    PAB: 1,
+    PEN: 3.07756,
+    PGK: 2.632733,
+    PHP: 44.28281,
+    PKR: 101.370761,
+    PLN: 3.669533,
+    PYG: 4762.869987,
+    QAR: 3.641189,
+    RON: 3.89903,
+    RSD: 106.255,
+    RUB: 63.33746,
+    RWF: 690.014,
+    SAR: 3.750887,
+    SBD: 7.698378,
+    SCR: 14.00301,
+    SDG: 5.9723,
+    SEK: 8.413743,
+    SGD: 1.354582,
+    SHP: 0.648948,
+    SLL: 4358.333333,
+    SOS: 697.906022,
+    SRD: 3.2825,
+    STD: 21543.144533,
+    SVC: 8.71784,
+    SYP: 188.896999,
+    SZL: 11.6788,
+    THB: 32.58811,
+    TJS: 5.39785,
+    TMT: 2.849715,
+    TND: 1.92094,
+    TOP: 2.010219,
+    TRY: 2.457057,
+    TTD: 6.35913,
+    TWD: 31.42154,
+    TZS: 1804.550016,
+    UAH: 25.904,
+    UGX: 2872.65,
+    USD: 1,
+    UYU: 24.7117,
+    UZS: 2452.969971,
+    VEF: 6.311763,
+    VND: 21332.166667,
+    VUV: 106.107501,
+    WST: 2.495748,
+    XAF: 575.218129,
+    XAG: 0.05775279,
+    XAU: 0.00081416,
+    XCD: 2.70142,
+    XDR: 0.706658,
+    XOF: 575.234129,
+    XPF: 104.870429,
+    YER: 215.08,
+    ZAR: 11.65586,
+    ZMK: 5252.024745,
+    ZMW: 6.696675,
+    ZWL: 322.355006
+  };
 
-	// Current version.
-	fx.version = '0.2';
+	var base = 'USD';
 
-
-	/* --- Setup --- */
-
-	// fxSetup can be defined before loading money.js, to set the exchange rates and the base
-	// (and default from/to) currencies - or the rates can be loaded in later if needed.
-	var fxSetup = root.fxSetup || {
-		rates : {},
-		base : ""
-	};
-
-	// Object containing exchange rates relative to the fx.base currency, eg { "GBP" : "0.64" }
-	fx.rates = fxSetup.rates;
-
-	// Default exchange rate base currency (eg "USD"), which all the exchange rates are relative to
-	fx.base = fxSetup.base;
-
-	// Default from / to currencies for conversion via fx.convert():
-	fx.settings = {
-		from : fxSetup.from || fx.base,
-		to : fxSetup.to || fx.base
-	};
-
-
-	/* --- Conversion --- */
-
-	// The base function of the library: converts a value from one currency to another
-	var convert = fx.convert = function(val, opts) {
-		// Convert arrays recursively
-		if (typeof val === 'object' && val.length) {
-			for (var i = 0; i< val.length; i++ ) {
-				val[i] = convert(val[i], opts);
-			}
-			return val;
-		}
-
-		// Make sure we gots some opts
-		opts = opts || {};
-
-		// We need to know the `from` and `to` currencies
-		if( !opts.from ) opts.from = fx.settings.from;
-		if( !opts.to ) opts.to = fx.settings.to;
-
-		// Multiple the value by the exchange rate
-		return val * getRate( opts.to, opts.from );
-	};
-
-	// Returns the exchange rate to `target` currency from `base` currency
 	var getRate = function(to, from) {
-		// Save bytes in minified version
-		var rates = fx.rates;
 
-		// Make sure the base rate is in the rates object:
-		rates[fx.base] = 1;
+		rates[base] = 1;
 
-		// Throw an error if either rate isn't in the rates array
-		if ( !rates[to] || !rates[from] ) throw "fx error";
+		if (!rates[to] || !rates[from]) {
+      throw 'fx error';
+    }
 
-		// If `from` currency === fx.base, return the basic exchange rate for the `to` currency
-		if ( from === fx.base ) {
+		if (from === base) {
 			return rates[to];
 		}
 
-		// If `to` currency === fx.base, return the basic inverse rate of the `from` currency
-		if ( to === fx.base ) {
+		if (to === base) {
 			return 1 / rates[from];
 		}
 
-		// Otherwise, return the `to` rate multipled by the inverse of the `from` rate to get the
-		// relative exchange rate between the two currencies
 		return rates[to] * (1 / rates[from]);
 	};
 
-
-	/* --- OOP wrapper and chaining --- */
-
-	// If fx(val) is called as a function, it returns a wrapped object that can be used OO-style
-	var fxWrapper = function(val) {
-		// Experimental: parse strings to pull out currency code and value:
-		if ( typeof	val === "string" ) {
-			this._v = parseFloat(val.replace(/[^0-9-.]/g, ""));
-			this._fx = val.replace(/([^A-Za-z])/g, "");
-		} else {
-			this._v = val;
-		}
-	};
-
-	// Expose `wrapper.prototype` as `fx.prototype`
-	var fxProto = fx.prototype = fxWrapper.prototype;
-
-	// fx(val).convert(opts) does the same thing as fx.convert(val, opts)
-	fxProto.convert = function() {
-		var args = Array.prototype.slice.call(arguments);
-		args.unshift(this._v);
-		return convert.apply(fx, args);
-	};
-
-	// fx(val).from(currency) returns a wrapped `fx` where the value has been converted from
-	// `currency` to the `fx.base` currency. Should be followed by `.to(otherCurrency)`
-	fxProto.from = function(currency) {
-		var wrapped = fx(convert(this._v, {from: currency, to: fx.base}));
-		wrapped._fx = fx.base;
-		return wrapped;
-	};
-
-	// fx(val).to(currency) returns the value, converted from `fx.base` to `currency`
-	fxProto.to = function(currency) {
-		return convert(this._v, {from: this._fx ? this._fx : fx.settings.from, to: currency});
-	};
-
-
-	/* --- Module Definition --- */
-
-	// Export the fx object for CommonJS. If being loaded as an AMD module, define it as such.
-	// Otherwise, just add `fx` to the global object
-	if (typeof exports !== 'undefined') {
-		if (typeof module !== 'undefined' && module.exports) {
-			exports = module.exports = fx;
-		}
-		exports.fx = fx;
-	} else if (typeof define === 'function' && define.amd) {
-		// Return the library as an AMD module:
-		define([], function() {
-			return fx;
-		});
-	} else {
-		// Use fx.noConflict to restore `fx` back to its original value before money.js loaded.
-		// Returns a reference to the library's `fx` object; e.g. `var money = fx.noConflict();`
-		fx.noConflict = (function(previousFx) {
-			return function() {
-				// Reset the value of the root's `fx` variable:
-				root.fx = previousFx;
-				// Delete the noConflict function:
-				fx.noConflict = undefined;
-				// Return reference to the library to re-assign it:
-				return fx;
-			};
-		})(root.fx);
-
-		// Declare `fx` on the root (global/window) object:
-		root['fx'] = fx;
-	}
-
-	// Root will be `window` in browser or `global` on the server:
-}(this));
+  return val * getRate(base, from);
+}
